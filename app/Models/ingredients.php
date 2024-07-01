@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 class Ingredient extends Model
 {
     use HasFactory;
+    use HasUuid;
 
     protected $guarded = [];
 

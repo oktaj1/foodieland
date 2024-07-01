@@ -18,7 +18,7 @@ class SearchController extends Controller
 
         $recipes = Recipe::where('title', 'like', "%{$query}%")
             ->orWhere('description', 'like', "%{$query}%")
-            ->orWhere('ingredients', 'like', "%{$query}%")
+            ->orWhere('like', "%{$query}%")
             ->get();
 
         $blogPosts = BlogPost::where('title', 'like', "%{$query}%")

@@ -11,7 +11,7 @@ class RecipeController extends Controller
 {
     public function index()
     {
-        $recipes = Recipe::select('id', 'title', 'description', 'instructions', 'image', 'category_id', 'ingredients')
+        $recipes = Recipe::select('uuid', 'id', 'title', 'description', 'instructions', 'image', 'category_id')
             ->get();
 
         $recipes = $recipes->map(function ($recipe) {
@@ -25,10 +25,11 @@ class RecipeController extends Controller
         return response()->json($recipes);
     }
 
-    public function show($id)
+    public function show($uuid)
     {
-        $recipe = Recipe::select('id', 'title', 'description', 'instructions', 'image', 'category_id', 'ingredients')
-            ->find($id);
+        $recipe = Recipe::select('uuid', 'id', 'title', 'description', 'instructions', 'image', 'category_id')
+            ->where('uuid', $uuid)
+            ->first();
 
         if (! $recipe) {
             return response()->json(['message' => 'Recipe Not Found'], 404);
@@ -46,7 +47,6 @@ class RecipeController extends Controller
         $validatedData = $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|string',
-            'ingredients' => 'required|string',
             'instructions' => 'required|string',
             'image' => 'required|image|max:2048',
             'category_id' => 'required|exists:categories,id',
@@ -66,9 +66,9 @@ class RecipeController extends Controller
         return response()->json($recipe->makeHidden(['created_at', 'updated_at']), 201);
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, $uuid)
     {
-        $recipe = Recipe::find($id);
+        $recipe = Recipe::where('uuid', $uuid)->first();
 
         if (! $recipe) {
             return response()->json(['message' => 'Recipe Not Found'], 404);
@@ -77,7 +77,6 @@ class RecipeController extends Controller
         $validatedData = $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|string',
-            'ingredients' => 'required|string',
             'instructions' => 'required|string',
             'image' => 'nullable|image|max:2048',
             'category_id' => 'required|exists:categories,id',
@@ -100,9 +99,9 @@ class RecipeController extends Controller
         return response()->json($recipe->makeHidden(['created_at', 'updated_at']));
     }
 
-    public function destroy($id)
+    public function destroy($uuid)
     {
-        $recipe = Recipe::find($id);
+        $recipe = Recipe::where('uuid', $uuid)->first();
         if (! $recipe) {
             return response()->json(['message' => 'Recipe Not Found'], 404);
         }
@@ -124,8 +123,8 @@ class RecipeController extends Controller
             'ingredient' => 'required|string|min:1',
         ]);
 
-        $recipes = Recipe::where('ingredients', 'like', "%{$ingredient}%")
-            ->select('title', 'description', 'instructions', 'image', 'category_id', 'ingredients')
+        $recipes = Recipe::where('instructions', 'like', "%{$ingredient}%")
+            ->select('uuid', 'id', 'title', 'description', 'instructions', 'image', 'category_id')
             ->get();
 
         $recipes = $recipes->map(function ($recipe) {

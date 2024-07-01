@@ -9,10 +9,10 @@ use Illuminate\Support\Facades\Route;
 
 // Recipes
 Route::get('/recipes', [RecipeController::class, 'index']);
-Route::get('/recipes/{id}', [RecipeController::class, 'show']);
+Route::get('/recipes/{uuid}', [RecipeController::class, 'show']);
 Route::post('/recipes', [RecipeController::class, 'store']);
-Route::put('/recipes/{id}', [RecipeController::class, 'update']);
-Route::delete('/recipes/{id}', [RecipeController::class, 'destroy']);
+Route::put('/recipes/{uuid}', [RecipeController::class, 'update']);
+Route::delete('/recipes/{uuid}', [RecipeController::class, 'destroy']);
 
 // Blog Posts
 Route::get('/blog-posts', [BlogPostController::class, 'index']);

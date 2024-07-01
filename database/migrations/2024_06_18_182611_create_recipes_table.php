@@ -13,13 +13,12 @@ return new class extends Migration
     {
         Schema::create('recipes', function (Blueprint $table) {
             $table->id();
+            $table->uuid();
             $table->string('title');
             $table->text('description');
-            // $table->text('ingredients');
             $table->text('instructions');
             $table->string('image')->nullable();
-            // TODO create foreign key with foreignId()
-            $table->unsignedBigInteger('category_id');
+            $table->foreignId('category_id')->constrained('categories');
             $table->timestamps();
         });
     }
