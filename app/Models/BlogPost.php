@@ -11,5 +11,5 @@ class BlogPost extends Model
     use HasFactory;
     use HasUuid;
 
-    protected $guarded = [];
+    protected $fillable = ['title', 'content', 'image', 'category_id'];
 }
