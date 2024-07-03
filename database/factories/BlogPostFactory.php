@@ -16,7 +16,7 @@ class BlogPostFactory extends Factory
             // 'uuid' => Str::uuid(),
             'title' => $this->faker->sentence,
             'content' => $this->faker->paragraphs(3, true),
-            'image' => 'postimages/'.$this->faker->image('public/storage/postimages', 640, 480, null, false),
+            // 'image' => 'postimages/'.$this->faker->image('public/storage/postimages', 640, 480, null, false),
             'author' => $this->faker->name,
             'category_id' => \App\Models\Category::factory(), // Assuming Category factory exists
         ];

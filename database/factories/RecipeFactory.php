@@ -20,7 +20,7 @@ class RecipeFactory extends Factory
             'title' => implode(' ', $this->faker->words(3)),
             'description' => $this->faker->paragraph,
             'instructions' => $this->faker->paragraphs(3, true),
-            'image' => 'images/'.$this->faker->image('public/storage/images', 640, 480, null, false),
+            // 'image' => 'images/'.$this->faker->image('public/storage/images', 640, 480, null, false),
             'category_id' => \App\Models\Category::factory(), // Assuming Category factory exists
             'cooking_time' => "{$min}-{$max} mins",
         ];
