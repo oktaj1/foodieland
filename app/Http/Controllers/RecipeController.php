@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Category;
+use App\Http\Resources\RecipeResource;
 use App\Models\Recipe;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -11,35 +11,20 @@ class RecipeController extends Controller
 {
     public function index()
     {
-        $recipes = Recipe::select('uuid', 'id', 'title', 'description', 'instructions', 'image', 'category_id')
-            ->get();
+        $recipes = Recipe::all();
 
-        $recipes = $recipes->map(function ($recipe) {
-            $recipe->category_name = Category::find($recipe->category_id)->name;
-            $recipe->image = url('storage/'.$recipe->image);
-            unset($recipe->category_id);
-
-            return $recipe->makeHidden(['created_at', 'updated_at']);
-        });
-
-        return response()->json($recipes);
+        return RecipeResource::collection($recipes);
     }
 
     public function show($uuid)
     {
-        $recipe = Recipe::select('uuid', 'id', 'title', 'description', 'instructions', 'image', 'category_id')
-            ->where('uuid', $uuid)
-            ->first();
+        $recipe = Recipe::where('uuid', $uuid)->first();
 
         if (! $recipe) {
             return response()->json(['message' => 'Recipe Not Found'], 404);
         }
 
-        $recipe->category_name = Category::find($recipe->category_id)->name;
-        $recipe->image = url('storage/'.$recipe->image);
-        unset($recipe->category_id);
-
-        return response()->json($recipe->makeHidden(['created_at', 'updated_at']));
+        return new RecipeResource($recipe);
     }
 
     public function store(Request $request)
@@ -50,6 +35,7 @@ class RecipeController extends Controller
             'instructions' => 'required|string',
             'image' => 'required|image|max:2048',
             'category_id' => 'required|exists:categories,id',
+            'cooking_time' => 'required|string|max:255',
         ]);
 
         if ($request->hasFile('image')) {
@@ -59,11 +45,7 @@ class RecipeController extends Controller
 
         $recipe = Recipe::create($validatedData);
 
-        $recipe->category_name = Category::find($recipe->category_id)->name;
-        $recipe->image = url('storage/'.$recipe->image);
-        unset($recipe->category_id);
-
-        return response()->json($recipe->makeHidden(['created_at', 'updated_at']), 201);
+        return new RecipeResource($recipe);
     }
 
     public function update(Request $request, $uuid)
@@ -80,6 +62,7 @@ class RecipeController extends Controller
             'instructions' => 'required|string',
             'image' => 'nullable|image|max:2048',
             'category_id' => 'required|exists:categories,id',
+            'cooking_time' => 'required|string|max:255',
         ]);
 
         if ($request->hasFile('image')) {
@@ -92,16 +75,13 @@ class RecipeController extends Controller
 
         $recipe->update($validatedData);
 
-        $recipe->category_name = Category::find($recipe->category_id)->name;
-        $recipe->image = url('storage/'.$recipe->image);
-        unset($recipe->category_id);
-
-        return response()->json($recipe->makeHidden(['created_at', 'updated_at']));
+        return new RecipeResource($recipe);
     }
 
     public function destroy($uuid)
     {
         $recipe = Recipe::where('uuid', $uuid)->first();
+
         if (! $recipe) {
             return response()->json(['message' => 'Recipe Not Found'], 404);
         }
@@ -113,28 +93,5 @@ class RecipeController extends Controller
         $recipe->delete();
 
         return response()->json(['message' => 'Recipe Deleted Successfully']);
-    }
-
-    public function searchByIngredient(Request $request)
-    {
-        $ingredient = $request->input('ingredient');
-
-        $request->validate([
-            'ingredient' => 'required|string|min:1',
-        ]);
-
-        $recipes = Recipe::where('instructions', 'like', "%{$ingredient}%")
-            ->select('uuid', 'id', 'title', 'description', 'instructions', 'image', 'category_id')
-            ->get();
-
-        $recipes = $recipes->map(function ($recipe) {
-            $recipe->category_name = Category::find($recipe->category_id)->name;
-            $recipe->image = url('storage/'.$recipe->image);
-            unset($recipe->category_id);
-
-            return $recipe->makeHidden(['created_at', 'updated_at']);
-        });
-
-        return response()->json($recipes);
     }
 }

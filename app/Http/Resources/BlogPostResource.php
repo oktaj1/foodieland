@@ -9,6 +9,7 @@ class BlogPostResource extends JsonResource
     public function toArray($request)
     {
         return [
+            'id' => $this->uuid,
             'title' => $this->title,
             'content' => $this->content,
             'author' => $this->author,
@@ -16,6 +17,5 @@ class BlogPostResource extends JsonResource
             'category_name' => $this->category ? $this->category->name : null,
             'image' => url('storage/'.$this->image),
         ];
-        // return parent::toArray($request);
     }
 }
