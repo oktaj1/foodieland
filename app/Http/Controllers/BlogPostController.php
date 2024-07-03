@@ -13,7 +13,7 @@ class BlogPostController extends Controller
     public function index()
     //TODO use Resource classes for this
     {
-        $blogPosts = BlogPost::all();
+        $blogPosts = BlogPost::with('category')->paginate(20);
 
         return BlogPostResource::collection($blogPosts);
     }

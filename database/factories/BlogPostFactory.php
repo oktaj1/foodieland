@@ -13,7 +13,7 @@ class BlogPostFactory extends Factory
     public function definition()
     {
         return [
-            // 'uuid' => Str::uuid(),
+            'uuid' => Str::uuid(),
             'title' => $this->faker->sentence,
             'content' => $this->faker->paragraphs(3, true),
             // 'image' => 'postimages/'.$this->faker->image('public/storage/postimages', 640, 480, null, false),
