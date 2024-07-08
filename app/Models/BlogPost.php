@@ -2,14 +2,18 @@
 
 namespace App\Models;
 
-use App\Traits\HasUuid;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class BlogPost extends Model
 {
     use HasFactory;
-    use HasUuid;
 
-    protected $fillable = ['title', 'content', 'image', 'category_id'];
+    // Guard the category_id attribute
+    protected $guarded = ['category_id'];
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
 }

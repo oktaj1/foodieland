@@ -1,11 +1,16 @@
 <?php
 
-use App\Http\Controllers\AuthController;
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\RegisterUserController;
 use App\Http\Controllers\BlogPostController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\RecipeController;
 use App\Http\Controllers\SearchController;
 use Illuminate\Support\Facades\Route;
+
+// Authentication (public routes)
+Route::post('/register', RegisterUserController::class);
+Route::post('/login', LoginController::class);
 
 // Recipes
 Route::get('/recipes', [RecipeController::class, 'index']);
@@ -22,9 +27,6 @@ Route::put('/blog-posts/{blogPost}', [BlogPostController::class, 'update']);
 Route::delete('/blog-posts/{blogPost}', [BlogPostController::class, 'destroy']);
 
 // Categories
-
-//TODO use model binding instead of id, example category param
-
 Route::get('/categories', [CategoryController::class, 'index']);
 Route::get('/categories/{category}', [CategoryController::class, 'show']);
 Route::post('/categories', [CategoryController::class, 'store']);
@@ -33,8 +35,10 @@ Route::put('/categories/{category}', [CategoryController::class, 'update']);
 // Search
 Route::get('/search', [SearchController::class, 'search']);
 
-// Authentication
-Route::post('/auth/logout', [AuthController::class, 'logout']);
-
 // Ingredients
 Route::get('/recipes/search', [RecipeController::class, 'searchByIngredient']);
+
+// Protected routes
+Route::middleware('auth:sanctum')->group(function () {
+
+});
