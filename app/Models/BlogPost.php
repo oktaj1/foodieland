@@ -9,11 +9,15 @@ class BlogPost extends Model
 {
     use HasFactory;
 
-    // Guard the category_id attribute
-    protected $guarded = ['category_id'];
+    protected $guarded = [];
 
     public function category()
     {
         return $this->belongsTo(Category::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'created_by');
     }
 }
