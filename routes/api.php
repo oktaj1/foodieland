@@ -1,23 +1,47 @@
 <?php
 
-use App\Http\Controllers\Auth\LoginController;
-use App\Http\Controllers\Auth\RegisterUserController;
-use App\Http\Controllers\BlogPostController;
-use App\Http\Controllers\CategoryController;
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RecipeController;
 use App\Http\Controllers\SearchController;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\BlogPostController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\ForgotEmailController;
+use App\Http\Controllers\Auth\RegisterUserController;
+use App\Http\Controllers\Auth\VerificationController;
+use App\Http\Controllers\Auth\ResetPasswordController;
+use App\Http\Controllers\Auth\ForgotPasswordController;
+use App\Http\Controllers\Auth\EmailVerificationController;
+use App\Http\Controllers\Auth\PasswordResetLinkController;
 
 // Authentication (public routes)
 Route::post('/register', RegisterUserController::class);
-Route::post('/login', LoginController::class);
+Route::post('/login', LoginController::class)->name('login');
 
-// Recipes
+// Email Verification
+Route::post('register', [RegisterUserController::class, '__invoke']);
+Route::get('/email/verify/{id}/{hash}', [EmailVerificationController::class, 'verify'])
+    ->name('verification.verify')
+    ->middleware(['signed', 'throttle:6,1']);
+
+// Forgot Email
+Route::post('email/forgot', [ForgotEmailController::class, 'sendEmailInfo']);
+
+// Forgot Password
+Route::post('password/email', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
+Route::post('password/reset', [ResetPasswordController::class, 'reset'])->name('password.reset');
+
+// Recipes (public routes)
 Route::get('/recipes', [RecipeController::class, 'index']);
 Route::get('/recipes/{uuid}', [RecipeController::class, 'show']);
 
+// Custom unauthenticated route
+Route::get('/unauthenticated', function() {
+    return response()->json(['message' => 'Unauthenticated.'], 401);
+})->name('api.unauthenticated');
+
 // Protected routes
-Route::middleware('auth:sanctum')->group(function () {
+Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/recipes', [RecipeController::class, 'store']);
     Route::put('/recipes/{uuid}', [RecipeController::class, 'update']);
     Route::delete('/recipes/{uuid}', [RecipeController::class, 'destroy']);

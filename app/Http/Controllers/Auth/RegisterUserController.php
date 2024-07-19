@@ -3,37 +3,31 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Models\User;
 use Illuminate\Http\Request;
+use App\Models\User;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Validator;
 
 class RegisterUserController extends Controller
 {
     public function __invoke(Request $request)
     {
-        $request->validate([
-            'name' => ['required', 'string', 'max:255'], // Added validation for name
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
-            'password' => ['required', 'confirmed'],
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:8|confirmed',
         ]);
 
-        // Create a new user record
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
         $user = User::create([
-            'name' => $request->name, // Save the name
+            'name' => $request->name,
             'email' => $request->email,
-            'password' => Hash::make($request->password),
+            'password' => Hash::make($request->password),  // Ensure password is hashed with Bcrypt
         ]);
 
-        // Generate an API token for the user
-        $token = $user->createToken('AuthToken')->plainTextToken;
-
-        return response()->json([
-            'success' => true,
-            'message' => 'User created successfully!',
-            'token' => $token,
-            'user' => $user,
-        ], 200);
+        return response()->json(['message' => 'User registered successfully'], 201);
     }
 }
-
