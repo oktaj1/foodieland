@@ -31,9 +31,15 @@ Route::post('email/forgot', [ForgotEmailController::class, 'sendEmailInfo']);
 Route::post('password/email', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
 Route::post('password/reset', [ResetPasswordController::class, 'reset'])->name('password.reset');
 
+
+// Most Viewed Recipes
+Route::get('/recipes/most-viewed', [RecipeController::class, 'mostViewed']);
+
 // Recipes (public routes)
 Route::get('/recipes', [RecipeController::class, 'index']);
 Route::get('/recipes/{uuid}', [RecipeController::class, 'show']);
+
+
 
 // Custom unauthenticated route
 Route::get('/unauthenticated', function() {
@@ -55,3 +61,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/categories', [CategoryController::class, 'store']);
     Route::put('/categories/{category}', [CategoryController::class, 'update']);
 });
+
+
+// Search
+Route::get('/search', [SearchController::class, 'search']);

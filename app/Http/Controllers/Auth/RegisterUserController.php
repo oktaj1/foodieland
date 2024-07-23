@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Auth\Events\Registered;
 
 class RegisterUserController extends Controller
 {
@@ -27,6 +28,9 @@ class RegisterUserController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password),  // Ensure password is hashed with Bcrypt
         ]);
+
+        // Fire the Registered event
+        event(new Registered($user));
 
         return response()->json(['message' => 'User registered successfully'], 201);
     }

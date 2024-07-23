@@ -10,24 +10,20 @@ class SearchController extends Controller
 {
     public function search(Request $request)
     {
-        $query = $request->input('query');
+        $id = $request->input('id');
 
+        // Validate that id is present and is an integer
         $request->validate([
-            'query' => 'required|string|min:1',
+            'id' => 'required|integer',
         ]);
 
-        $recipes = Recipe::where('title', 'like', "%{$query}%")
-            ->orWhere('description', 'like', "%{$query}%")
-            ->orWhere('like', "%{$query}%")
-            ->get();
-
-        $blogPosts = BlogPost::where('title', 'like', "%{$query}%")
-            ->orWhere('content', 'like', "%{$query}%")
-            ->get();
+        // Find the recipe and blog post by ID
+        $recipe = Recipe::find($id);
+        $blogPost = BlogPost::find($id);
 
         $results = [
-            'recipes' => $recipes,
-            'blogPosts' => $blogPosts,
+            'recipe' => $recipe,
+            'blogPost' => $blogPost,
         ];
 
         return response()->json($results);
