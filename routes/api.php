@@ -6,6 +6,7 @@ use App\Http\Controllers\SearchController;
 use App\Http\Controllers\BlogPostController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Middleware\SetCookieTokenInHeaders;
 use App\Http\Controllers\Auth\ForgotEmailController;
 use App\Http\Controllers\Auth\RegisterUserController;
 use App\Http\Controllers\Auth\VerificationController;
@@ -39,18 +40,17 @@ Route::get('/recipes/most-viewed', [RecipeController::class, 'mostViewed']);
 Route::get('/recipes', [RecipeController::class, 'index']);
 Route::get('/recipes/{uuid}', [RecipeController::class, 'show']);
 
+//Posts (public routes)
+Route::get('/posts', [BlogPostController::class, 'index']);
+Route::get('/posts/{uuid}', [BlogPostController::class, 'show']);
 
-
-// // Custom unauthenticated route
-// Route::get('/unauthenticated', function() {
-//     return response()->json(['message' => 'Unauthenticated.'], 401);
-// })->name('api.unauthenticated');
 
 // Protected routes
-Route::middleware(['auth:sanctum'])->group(function () {
+Route::middleware(['setCookieTokenInHeaders', 'auth:sanctum'])->group(function () {
     Route::post('/recipes', [RecipeController::class, 'store']);
     Route::put('/recipes/{uuid}', [RecipeController::class, 'update']);
     Route::delete('/recipes/{uuid}', [RecipeController::class, 'destroy']);
+    
 
     // Blog Posts
     Route::post('/blog-posts', [BlogPostController::class, 'store']);

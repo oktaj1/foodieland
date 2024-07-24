@@ -9,7 +9,7 @@ class RecipeResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'uuid' => $this->uuid,
+            'id' => $this->uuid,
             'title' => $this->title,
             'description' => $this->description,
             'instructions' => $this->instructions,

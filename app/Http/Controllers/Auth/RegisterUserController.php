@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\UserResource;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
@@ -32,6 +33,10 @@ class RegisterUserController extends Controller
         // Fire the Registered event
         event(new Registered($user));
 
-        return response()->json(['message' => 'User registered successfully'], 201);
-    }
+            return response()->json(
+                ['message' => 'User registered successfully',
+                'user' => new UserResource($user),
+                'token' => $user->createToken('Personal Access Token')->plainTextToken,
+                ], 201);
+        }
 }

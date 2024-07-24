@@ -38,11 +38,21 @@ class LoginController extends Controller
                 'message' => 'Authenticated successfully',
             ];
 
-            // Optionally, set a cookie with the token
-            $cookie = cookie('token', $token, config('sanctum.expiration'), '/', '.myapp.local', null, true);
+            // Create the auth cookie
+            $cookie = cookie(
+                'auth_token',                       // Cookie name
+                $token,                            // Cookie value
+                config('sanctum.expiration'),      // Cookie expiration in minutes
+                '/',                               // Cookie path
+                null,                              // Cookie domain (null to leave it unset)
+                false,                             // Secure (HTTPS only)
+                true,                              // HttpOnly
+                false,                             // Raw
+                'lax'                              // SameSite attribute
+            );
 
-            // Return JSON response with user data, token, and set cookie
-            return response()->json($response)->withCookie($cookie);
+            // Return response with cookie
+            return response()->json($response)->cookie($cookie);
         }
 
         // If authentication fails, return unauthorized response
