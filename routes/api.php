@@ -41,10 +41,10 @@ Route::get('/recipes/{uuid}', [RecipeController::class, 'show']);
 
 
 
-// Custom unauthenticated route
-Route::get('/unauthenticated', function() {
-    return response()->json(['message' => 'Unauthenticated.'], 401);
-})->name('api.unauthenticated');
+// // Custom unauthenticated route
+// Route::get('/unauthenticated', function() {
+//     return response()->json(['message' => 'Unauthenticated.'], 401);
+// })->name('api.unauthenticated');
 
 // Protected routes
 Route::middleware(['auth:sanctum'])->group(function () {

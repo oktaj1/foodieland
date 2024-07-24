@@ -41,7 +41,7 @@ class RecipeController extends Controller
             Log::info('All recipes:', $allRecipes->toArray());
     
             // Now, let's get the top 3 as before
-            $topRecipes = Recipe::orderBy('views', 'desc')->take(3)->get();
+            $topRecipes = Recipe::orderBy('views', 'desc')->take(4)->get();
             Log::info('Top 3 recipes:', $topRecipes->toArray());
     
             if ($topRecipes->isEmpty()) {
