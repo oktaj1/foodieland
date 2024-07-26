@@ -44,6 +44,9 @@ Route::get('/recipes/{uuid}', [RecipeController::class, 'show']);
 Route::get('/posts', [BlogPostController::class, 'index']);
 Route::get('/posts/{uuid}', [BlogPostController::class, 'show']);
 
+// Categories (public routes)
+Route::get('/categories', [CategoryController::class, 'index']);
+Route::get('/categories/{category}', [CategoryController::class, 'show']);
 
 // Protected routes
 Route::middleware(['setCookieTokenInHeaders', 'auth:sanctum'])->group(function () {

@@ -20,7 +20,7 @@ class SearchController extends Controller
         // Find the recipe and blog post by ID
         $recipe = Recipe::find($id);
         $blogPost = BlogPost::find($id);
-
+        
         $results = [
             'recipe' => $recipe,
             'blogPost' => $blogPost,
