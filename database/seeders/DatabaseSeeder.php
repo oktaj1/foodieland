@@ -24,6 +24,7 @@ class DatabaseSeeder extends Seeder
             BlogPostSeeder::class,
             RecipeSeeder::class,
             CategorySeeder::class,
+            UserSeeder::class,
         ]);
     }
 }
