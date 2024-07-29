@@ -62,7 +62,7 @@ Route::middleware(['setCookieTokenInHeaders', 'auth:sanctum'])->group(function (
 
     // Categories
     Route::post('/categories', [CategoryController::class, 'store']);
-    Route::put('/categories/{category}', [CategoryController::class, 'update']);
+    Route::put('/categories/{uuid}', [CategoryController::class, 'update']);
 });
 
 
