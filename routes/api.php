@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RecipeController;
 use App\Http\Controllers\SearchController;
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\BlogPostController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\Auth\LoginController;
@@ -68,3 +69,7 @@ Route::middleware(['setCookieTokenInHeaders', 'auth:sanctum'])->group(function (
 
 // Search
 Route::get('/search', [SearchController::class, 'search']);
+
+
+// Contact
+Route::post('/contact', [ContactController::class, 'store']);
