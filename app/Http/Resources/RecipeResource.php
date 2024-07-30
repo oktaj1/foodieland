@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -16,6 +15,7 @@ class RecipeResource extends JsonResource
             'image' => url('storage/'.$this->image),
             'category_name' => $this->category->name,
             'cooking_time' => $this->cooking_time,
+            'author' => $this->author, 
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];

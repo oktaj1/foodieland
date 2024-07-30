@@ -1,31 +1,41 @@
 <?php
-
 namespace App\Http\Controllers;
 
-use App\Models\BlogPost;
+use App\Http\Resources\RecipeResource;
+use App\Http\Resources\BlogPostResource;
 use App\Models\Recipe;
+use App\Models\BlogPost;
 use Illuminate\Http\Request;
 
 class SearchController extends Controller
 {
     public function search(Request $request)
     {
-        $id = $request->input('id');
-
-        // Validate that id is present and is an integer
+        $query = $request->input('query');
+        
+        // Validate the query input
         $request->validate([
-            'id' => 'required|integer',
+            'query' => 'required|string|max:255',
         ]);
 
-        // Find the recipe and blog post by ID
-        $recipe = Recipe::find($id);
-        $blogPost = BlogPost::find($id);
-        
+        // Search recipes
+        $recipes = Recipe::where('title', 'like', '%' . $query . '%')
+                         ->orWhere('description', 'like', '%' . $query . '%')
+                         ->orWhere('author', 'like', '%' . $query . '%')
+                         ->get();
+
+        // Search blog posts
+        $blogPosts = BlogPost::where('title', 'like', '%' . $query . '%')
+                              ->orWhere('content', 'like', '%' . $query . '%')
+                              ->orWhere('author', 'like', '%' . $query . '%')
+                              ->get();
+
         $results = [
-            'recipe' => $recipe,
-            'blogPost' => $blogPost,
+            'recipes' => RecipeResource::collection($recipes),
+            'blogPosts' => BlogPostResource::collection($blogPosts),
         ];
 
         return response()->json($results);
     }
 }
+

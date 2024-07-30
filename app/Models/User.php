@@ -34,4 +34,9 @@ class User extends Authenticatable implements MustVerifyEmail
         $url = config('app.url') . '/api/password/reset/' . $token;
         $this->notify(new ResetPasswordNotification($url));
     }
+
+    public function recipes()
+    {
+        return $this->hasMany(Recipe::class, 'created_by');
+    }
 }
