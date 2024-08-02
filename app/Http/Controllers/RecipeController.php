@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use App\Http\Resources\RecipeResource;
@@ -16,6 +17,7 @@ class RecipeController extends Controller
         return RecipeResource::collection($recipes);
     }
 
+    // TODO: use model binding instead of uuid
     public function show($uuid)
     {
         $recipe = Recipe::where('uuid', $uuid)->with('category')->first();
@@ -27,6 +29,7 @@ class RecipeController extends Controller
         return new RecipeResource($recipe);
     }
 
+    // TODO: use FormRequest to validate the request
     public function store(Request $request)
     {
         $validatedData = $request->validate([
@@ -53,6 +56,7 @@ class RecipeController extends Controller
 
     public function update(Request $request, $uuid)
     {
+        // TODO: use firstOrFail instead of first() and remove the if statement
         $recipe = Recipe::where('uuid', $uuid)->first();
 
         if (! $recipe) {
@@ -81,8 +85,10 @@ class RecipeController extends Controller
         return new RecipeResource($recipe);
     }
 
+    // TODO: use Model Binding
     public function destroy($uuid)
     {
+        // TODO: use firstOrFail instead of first() and remove the if statement
         $recipe = Recipe::where('uuid', $uuid)->first();
 
         if (! $recipe) {
@@ -98,4 +104,3 @@ class RecipeController extends Controller
         return response()->json(['message' => 'Recipe Deleted Successfully']);
     }
 }
-

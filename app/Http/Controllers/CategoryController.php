@@ -41,4 +41,6 @@ class CategoryController extends Controller
 
         return new CategoryResource($category);
     }
+
+    // TODO: do you need a method to delete a category?
 }
