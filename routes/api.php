@@ -1,5 +1,6 @@
 <?php
 
+
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RecipeController;
 use App\Http\Controllers\SearchController;
@@ -11,10 +12,12 @@ use App\Http\Middleware\SetCookieTokenInHeaders;
 use App\Http\Controllers\Auth\ForgotEmailController;
 use App\Http\Controllers\Auth\RegisterUserController;
 use App\Http\Controllers\Auth\VerificationController;
-use App\Http\Controllers\Auth\ResetPasswordController;
-use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\EmailVerificationController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
+use App\Http\Controllers\Auth\ForgotPasswordController;
+use App\Http\Controllers\Auth\ResetPasswordController;
+
+
 
 // Authentication (public routes)
 Route::post('/register', RegisterUserController::class);
@@ -29,10 +32,10 @@ Route::get('/email/verify/{id}/{hash}', [EmailVerificationController::class, 've
 // Forgot Email
 Route::post('email/forgot', [ForgotEmailController::class, 'sendEmailInfo']);
 
+
 // Forgot Password
 Route::post('password/email', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
 Route::post('password/reset', [ResetPasswordController::class, 'reset'])->name('password.reset');
-
 
 // Most Viewed Recipes
 Route::get('/recipes/most-viewed', [RecipeController::class, 'mostViewed']);
@@ -73,3 +76,4 @@ Route::get('/search', [SearchController::class, 'search']);
 
 // Contact
 Route::post('/contact', [ContactController::class, 'store']);
+Route::get('/contact', [ContactController::class, 'index']);

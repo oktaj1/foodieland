@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 class PasswordResetLinkController extends Controller
+
 {
     public function verify($token, Request $request)
     {
