@@ -2,17 +2,14 @@
 
 namespace App\Http\Middleware;
 
-use Closure;
-use Illuminate\Http\Request;
-use Symfony\Component\HttpFoundation\Response;
-
+// TODO: delete this file not needed
 class CustomAuthenticate
 {
     protected function redirectTo($request)
     {
         dd('hre');
-        if (!$request->expectsJson()) {
-            return route('api.unauthenticated'); 
+        if (! $request->expectsJson()) {
+            return route('api.unauthenticated');
         }
     }
 }

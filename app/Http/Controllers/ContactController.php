@@ -1,10 +1,11 @@
 <?php
+
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Mail\ContactSubmissionReceived;
 use App\Models\ContactSubmission; // Import the model if using database storage
-use Illuminate\Support\Facades\Mail; // Import for sending emails
-use App\Mail\ContactSubmissionReceived; // Import your email class
+use Illuminate\Http\Request; // Import for sending emails
+use Illuminate\Support\Facades\Mail; // Import your email class
 
 class ContactController extends Controller
 {
@@ -25,9 +26,9 @@ class ContactController extends Controller
         ]);
 
         // Send email notification
+        // TODO: use queue/jobs to send emails in the background
         Mail::to('your-email@example.com')->send(new ContactSubmissionReceived($request->all()));
 
         return response()->json(['message' => 'Contact form submitted successfully.']);
     }
 }
-
