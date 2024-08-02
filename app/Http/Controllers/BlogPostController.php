@@ -10,9 +10,10 @@ use Illuminate\Support\Facades\Storage;
 use App\Http\Resources\BlogPostResource;
 
 class BlogPostController extends Controller
-{
+{   
     public function index()
     {
+        
         $blogPosts = BlogPost::paginate(20);
         return BlogPostResource::collection($blogPosts);
     }
