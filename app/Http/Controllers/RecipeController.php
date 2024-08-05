@@ -27,8 +27,11 @@ class RecipeController extends Controller
     }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     public function store(StoreRecipeRequest $request)
 =======
+=======
+>>>>>>> 1a78a8badddf86bdfa98e2e327925e94f8b53736
     // TODO: use FormRequest to validate the request
     public function store(Request $request)
 >>>>>>> 1a78a8badddf86bdfa98e2e327925e94f8b53736
@@ -51,8 +54,11 @@ class RecipeController extends Controller
     public function update(StoreRecipeRequest $request, $uuid)
     {
 <<<<<<< HEAD
+<<<<<<< HEAD
         $recipe = Recipe::where('uuid', $uuid)->firstOrFail();
 =======
+=======
+>>>>>>> 1a78a8badddf86bdfa98e2e327925e94f8b53736
         // TODO: use firstOrFail instead of first() and remove the if statement
         $recipe = Recipe::where('uuid', $uuid)->first();
 >>>>>>> 1a78a8badddf86bdfa98e2e327925e94f8b53736
@@ -76,8 +82,11 @@ class RecipeController extends Controller
     public function destroy($uuid)
     {
 <<<<<<< HEAD
+<<<<<<< HEAD
         $recipe = Recipe::where('uuid', $uuid)->firstOrFail();
 =======
+=======
+>>>>>>> 1a78a8badddf86bdfa98e2e327925e94f8b53736
         // TODO: use firstOrFail instead of first() and remove the if statement
         $recipe = Recipe::where('uuid', $uuid)->first();
 

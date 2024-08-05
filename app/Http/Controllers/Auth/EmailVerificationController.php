@@ -9,8 +9,11 @@ use Illuminate\Http\Request;
 class EmailVerificationController extends Controller
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
     public function verify(Request $request, User $user)
 =======
+=======
+>>>>>>> 1a78a8badddf86bdfa98e2e327925e94f8b53736
     //TODO: Use Model Binding
     public function verify(Request $request, $id)
 >>>>>>> 1a78a8badddf86bdfa98e2e327925e94f8b53736

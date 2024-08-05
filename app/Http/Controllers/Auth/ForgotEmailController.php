@@ -7,8 +7,12 @@ use App\Mail\EmailInfoMail;
 use App\Models\User;
 use Illuminate\Http\Request;
 <<<<<<< HEAD
+<<<<<<< HEAD
 use App\Http\Controllers\Controller;
 use App\Jobs\SendEmailInfoJob;
+=======
+use Illuminate\Support\Facades\Mail;
+>>>>>>> 1a78a8badddf86bdfa98e2e327925e94f8b53736
 =======
 use Illuminate\Support\Facades\Mail;
 >>>>>>> 1a78a8badddf86bdfa98e2e327925e94f8b53736
@@ -28,9 +32,12 @@ class ForgotEmailController extends Controller
         }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
         // Dispatch the job to send the email
         SendEmailInfoJob::dispatch($user);
 =======
+=======
+>>>>>>> 1a78a8badddf86bdfa98e2e327925e94f8b53736
         // TODO: Send the email with a job/queue
         // Send email with user's email address
         Mail::to($user->email)->send(new EmailInfoMail($user));

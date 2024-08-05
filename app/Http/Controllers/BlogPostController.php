@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Resources\BlogPostResource;
 use App\Models\BlogPost;
 <<<<<<< HEAD
+<<<<<<< HEAD
 use Illuminate\Support\Str;
 =======
 >>>>>>> 1a78a8badddf86bdfa98e2e327925e94f8b53736
@@ -16,6 +17,11 @@ use Illuminate\Support\Facades\Storage;
 use App\Http\Resources\BlogPostResource;
 use App\Http\Requests\StoreBlogPostRequest;
 =======
+use Illuminate\Support\Str;
+>>>>>>> 1a78a8badddf86bdfa98e2e327925e94f8b53736
+=======
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 >>>>>>> 1a78a8badddf86bdfa98e2e327925e94f8b53736
 
@@ -31,6 +37,7 @@ class BlogPostController extends Controller
 
     public function show($uuid)
     {
+<<<<<<< HEAD
 <<<<<<< HEAD
         $blogPost = BlogPost::where('uuid', $uuid)->firstOrFail();
         return new BlogPostResource($blogPost);
@@ -49,6 +56,17 @@ class BlogPostController extends Controller
 
         return new BlogPostResource($blogPost);
     }
+=======
+        // TODO: Use firstOrFail() instead of first()
+        // and remove the if statement
+        $blogPost = BlogPost::where('uuid', $uuid)->first();
+        if (! $blogPost) {
+            return response()->json(['message' => 'Blog Post Not Found'], 404);
+        }
+
+        return new BlogPostResource($blogPost);
+    }
+>>>>>>> 1a78a8badddf86bdfa98e2e327925e94f8b53736
 
     // TODO: use FormRequest class to validate request
     public function store(Request $request)
@@ -59,6 +77,9 @@ class BlogPostController extends Controller
             'image' => 'required|image|max:2048',
             'category_id' => 'required|exists:categories,id',
         ]);
+<<<<<<< HEAD
+>>>>>>> 1a78a8badddf86bdfa98e2e327925e94f8b53736
+=======
 >>>>>>> 1a78a8badddf86bdfa98e2e327925e94f8b53736
 
         if ($request->hasFile('image')) {
@@ -67,8 +88,11 @@ class BlogPostController extends Controller
         }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
         $validatedData['author_name '] = auth()->user()->name;
 =======
+=======
+>>>>>>> 1a78a8badddf86bdfa98e2e327925e94f8b53736
         // TODO: maybe rename the author field to author_id if we have logged users for this, or rename it to author_name
         $validatedData['author'] = auth()->user()->name;
 >>>>>>> 1a78a8badddf86bdfa98e2e327925e94f8b53736
@@ -79,12 +103,15 @@ class BlogPostController extends Controller
         return new BlogPostResource($blogPost);
     }
 <<<<<<< HEAD
+<<<<<<< HEAD
     
     public function update(StoreBlogPostRequest $request, $uuid)
     {
         $blogPost = BlogPost::where('uuid', $uuid)->firstOrFail();
     
 =======
+=======
+>>>>>>> 1a78a8badddf86bdfa98e2e327925e94f8b53736
 
     // TODO: use FormRequest class to validate request
     // and use Model Binding
@@ -97,6 +124,9 @@ class BlogPostController extends Controller
             return response()->json(['message' => 'Blog Post Not Found'], 404);
         }
 
+<<<<<<< HEAD
+>>>>>>> 1a78a8badddf86bdfa98e2e327925e94f8b53736
+=======
 >>>>>>> 1a78a8badddf86bdfa98e2e327925e94f8b53736
         $validatedData = $request->validate([
             'title' => 'required|string|max:255',
@@ -118,6 +148,7 @@ class BlogPostController extends Controller
         return new BlogPostResource($blogPost);
     }
 <<<<<<< HEAD
+<<<<<<< HEAD
     
     public function destroy(BlogPost $blogPost)
     {
@@ -125,6 +156,8 @@ class BlogPostController extends Controller
 
         try {
 =======
+=======
+>>>>>>> 1a78a8badddf86bdfa98e2e327925e94f8b53736
 
     // TODO: use Model Binding
     // and use Database Transactions in case one of the queries fails
@@ -135,11 +168,15 @@ class BlogPostController extends Controller
             return response()->json(['message' => 'Blog Post Not Found'], 404);
         }
 
+<<<<<<< HEAD
+>>>>>>> 1a78a8badddf86bdfa98e2e327925e94f8b53736
+=======
 >>>>>>> 1a78a8badddf86bdfa98e2e327925e94f8b53736
         if ($blogPost->image) {
             Storage::disk('public')->delete($blogPost->image);
         }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 
     
@@ -157,8 +194,14 @@ class BlogPostController extends Controller
 }
 =======
         $blogPost->delete();
+=======
+        $blogPost->delete();
+>>>>>>> 1a78a8badddf86bdfa98e2e327925e94f8b53736
 
         return response()->json(['message' => 'Blog Post Deleted Successfully']);
     }
 }
+<<<<<<< HEAD
+>>>>>>> 1a78a8badddf86bdfa98e2e327925e94f8b53736
+=======
 >>>>>>> 1a78a8badddf86bdfa98e2e327925e94f8b53736
