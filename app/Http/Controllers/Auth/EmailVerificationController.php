@@ -2,15 +2,18 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Carbon;
-use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Hash;
 
 class EmailVerificationController extends Controller
 {
+<<<<<<< HEAD
     public function verify(Request $request, User $user)
+=======
+    //TODO: Use Model Binding
+    public function verify(Request $request, $id)
+>>>>>>> 1a78a8badddf86bdfa98e2e327925e94f8b53736
     {
         if (! hash_equals((string) $request->route('hash'), sha1($user->email))) {
             return response()->json(['message' => 'Invalid verification link.'], 400);
