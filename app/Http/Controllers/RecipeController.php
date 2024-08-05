@@ -18,23 +18,15 @@ class RecipeController extends Controller
         return RecipeResource::collection($recipes);
     }
 
-    // TODO: use model binding instead of uuid
-    public function show($uuid)
+    // Use model binding instead of uuid
+    public function show(Recipe $recipe)
     {
-        $recipe = Recipe::where('uuid', $uuid)->with('category')->firstOrFail();
+        $recipe->load('category');
 
         return new RecipeResource($recipe);
     }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
     public function store(StoreRecipeRequest $request)
-=======
-=======
->>>>>>> 1a78a8badddf86bdfa98e2e327925e94f8b53736
-    // TODO: use FormRequest to validate the request
-    public function store(Request $request)
->>>>>>> 1a78a8badddf86bdfa98e2e327925e94f8b53736
     {
         $validatedData = $request->validated();
 
@@ -51,18 +43,8 @@ class RecipeController extends Controller
         return new RecipeResource($recipe);
     }
 
-    public function update(StoreRecipeRequest $request, $uuid)
+    public function update(StoreRecipeRequest $request, Recipe $recipe)
     {
-<<<<<<< HEAD
-<<<<<<< HEAD
-        $recipe = Recipe::where('uuid', $uuid)->firstOrFail();
-=======
-=======
->>>>>>> 1a78a8badddf86bdfa98e2e327925e94f8b53736
-        // TODO: use firstOrFail instead of first() and remove the if statement
-        $recipe = Recipe::where('uuid', $uuid)->first();
->>>>>>> 1a78a8badddf86bdfa98e2e327925e94f8b53736
-
         $validatedData = $request->validated();
 
         if ($request->hasFile('image')) {
@@ -78,23 +60,8 @@ class RecipeController extends Controller
         return new RecipeResource($recipe);
     }
 
-    // TODO: use Model Binding
-    public function destroy($uuid)
+    public function destroy(Recipe $recipe)
     {
-<<<<<<< HEAD
-<<<<<<< HEAD
-        $recipe = Recipe::where('uuid', $uuid)->firstOrFail();
-=======
-=======
->>>>>>> 1a78a8badddf86bdfa98e2e327925e94f8b53736
-        // TODO: use firstOrFail instead of first() and remove the if statement
-        $recipe = Recipe::where('uuid', $uuid)->first();
-
-        if (! $recipe) {
-            return response()->json(['message' => 'Recipe Not Found'], 404);
-        }
->>>>>>> 1a78a8badddf86bdfa98e2e327925e94f8b53736
-
         if ($recipe->image) {
             Storage::disk('public')->delete($recipe->image);
         }
