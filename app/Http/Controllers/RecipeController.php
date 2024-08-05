@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\RecipeResource;
 use App\Models\Recipe;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Illuminate\Http\Request;
+use App\Http\Resources\RecipeResource;
+use Illuminate\Support\Facades\Storage;
+use App\Http\Requests\StoreRecipeRequest;
 
 class RecipeController extends Controller
 {
@@ -17,36 +18,24 @@ class RecipeController extends Controller
         return RecipeResource::collection($recipes);
     }
 
-    // TODO: use model binding instead of uuid
-    public function show($uuid)
+    // Use model binding instead of uuid
+    public function show(Recipe $recipe)
     {
-        $recipe = Recipe::where('uuid', $uuid)->with('category')->first();
-
-        if (! $recipe) {
-            return response()->json(['message' => 'Recipe Not Found'], 404);
-        }
+        $recipe->load('category');
 
         return new RecipeResource($recipe);
     }
 
-    // TODO: use FormRequest to validate the request
-    public function store(Request $request)
+    public function store(StoreRecipeRequest $request)
     {
-        $validatedData = $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'required|string',
-            'instructions' => 'required|string',
-            'image' => 'required|image|max:2048',
-            'category_id' => 'required|exists:categories,id',
-            'cooking_time' => 'required|string|max:10',
-        ]);
+        $validatedData = $request->validated();
 
         if ($request->hasFile('image')) {
             $path = $request->file('image')->store('images', 'public');
             $validatedData['image'] = $path;
         }
 
-        $validatedData['author'] = auth()->user()->name; // Store author's name
+        $validatedData['author_name'] = auth()->user()->name; // Store author's name
         $validatedData['uuid'] = (string) Str::uuid();
 
         $recipe = Recipe::create($validatedData);
@@ -54,23 +43,9 @@ class RecipeController extends Controller
         return new RecipeResource($recipe);
     }
 
-    public function update(Request $request, $uuid)
+    public function update(StoreRecipeRequest $request, Recipe $recipe)
     {
-        // TODO: use firstOrFail instead of first() and remove the if statement
-        $recipe = Recipe::where('uuid', $uuid)->first();
-
-        if (! $recipe) {
-            return response()->json(['message' => 'Recipe Not Found'], 404);
-        }
-
-        $validatedData = $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'required|string',
-            'instructions' => 'required|string',
-            'image' => 'nullable|image|max:2048',
-            'category_id' => 'required|exists:categories,id',
-            'cooking_time' => 'required|string|max:255',
-        ]);
+        $validatedData = $request->validated();
 
         if ($request->hasFile('image')) {
             if ($recipe->image) {
@@ -85,16 +60,8 @@ class RecipeController extends Controller
         return new RecipeResource($recipe);
     }
 
-    // TODO: use Model Binding
-    public function destroy($uuid)
+    public function destroy(Recipe $recipe)
     {
-        // TODO: use firstOrFail instead of first() and remove the if statement
-        $recipe = Recipe::where('uuid', $uuid)->first();
-
-        if (! $recipe) {
-            return response()->json(['message' => 'Recipe Not Found'], 404);
-        }
-
         if ($recipe->image) {
             Storage::disk('public')->delete($recipe->image);
         }
