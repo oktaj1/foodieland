@@ -12,7 +12,7 @@ class BlogPostResource extends JsonResource
             'id' => $this->uuid,
             'title' => $this->title,
             'content' => $this->content,
-            'author' => $this->author,
+            'author_name' => $this->author_name,
             'category_id' => $this->category ? $this->category->id : null,
             'category_name' => $this->category ? $this->category->name : null,
             'image' => url('storage/'.$this->image),

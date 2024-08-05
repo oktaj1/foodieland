@@ -4,14 +4,14 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateBlogPostRequest extends FormRequest
+class StoreRecipeRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return false;
+        return true; // Change this to implement authorization logic if needed
     }
 
     /**
@@ -23,8 +23,7 @@ class UpdateBlogPostRequest extends FormRequest
     {
         return [
             'title' => 'required|string|max:255',
-            'content' => 'required|string|max:255',
-            'author_name' => 'required|string|max:255',
+            'content' => 'required|string',
             'image' => 'nullable|image|max:2048',
             'category_id' => 'required|exists:categories,id',
         ];

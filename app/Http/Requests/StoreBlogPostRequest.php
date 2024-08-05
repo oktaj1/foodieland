@@ -11,7 +11,7 @@ class StoreBlogPostRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,7 @@ class StoreBlogPostRequest extends FormRequest
         return [
             'title' => 'required|string|max:255',
             'content' => 'required|string|max:255',
-            'author' => 'required|string|max:255',
+            'author_name' => 'required|string|max:255',
             'image' => 'required|image|max:2048',
             'category_id' => 'required|exists:categories,id',
         ];

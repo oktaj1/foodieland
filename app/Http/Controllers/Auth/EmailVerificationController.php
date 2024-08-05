@@ -10,10 +10,8 @@ use Illuminate\Support\Facades\Hash;
 
 class EmailVerificationController extends Controller
 {
-    public function verify(Request $request, $id)
+    public function verify(Request $request, User $user)
     {
-        $user = User::findOrFail($id);
-
         if (! hash_equals((string) $request->route('hash'), sha1($user->email))) {
             return response()->json(['message' => 'Invalid verification link.'], 400);
         }

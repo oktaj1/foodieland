@@ -62,7 +62,8 @@ Route::middleware(['setCookieTokenInHeaders', 'auth:sanctum'])->group(function (
     // Blog Posts
     Route::post('/blog-posts', [BlogPostController::class, 'store']);
     Route::put('/blog-posts/{uuid}', [BlogPostController::class, 'update']);
-    Route::delete('/blog-posts/{uuid}', [BlogPostController::class, 'destroy']);
+    Route::delete('/blog-posts/{blogPost}', [BlogPostController::class, 'destroy']);
+
 
     // Categories
     Route::post('/categories', [CategoryController::class, 'store']);
