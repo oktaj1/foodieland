@@ -18,9 +18,9 @@ class BlogPostController extends Controller
         return BlogPostResource::collection($blogPosts);
     }
 
-    public function show($uuid)
+    public function show(BlogPost $blogPost)
     {
-        $blogPost = BlogPost::where('uuid', $uuid)->firstOrFail();
+        
         return new BlogPostResource($blogPost);
     }
 
