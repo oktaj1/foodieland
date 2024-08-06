@@ -2,25 +2,25 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreBlogPostRequest;
 use App\Http\Resources\BlogPostResource;
 use App\Models\BlogPost;
-use Illuminate\Support\Str;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
-use App\Http\Requests\StoreBlogPostRequest;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class BlogPostController extends Controller
 {
     public function index()
     {
         $blogPosts = BlogPost::paginate(20);
+
         return BlogPostResource::collection($blogPosts);
     }
 
     public function show(BlogPost $blogPost)
     {
-        
+
         return new BlogPostResource($blogPost);
     }
 
@@ -37,12 +37,12 @@ class BlogPostController extends Controller
         $validatedData['uuid'] = (string) Str::uuid();
 
         $blogPost = BlogPost::create($validatedData);
+
         return new BlogPostResource($blogPost);
     }
 
-    public function update(StoreBlogPostRequest $request, $uuid)
+    public function update(StoreBlogPostRequest $request, BlogPost $blogPost)
     {
-        $blogPost = BlogPost::where('uuid', $uuid)->firstOrFail();
 
         $validatedData = $request->validated();
 
@@ -55,12 +55,12 @@ class BlogPostController extends Controller
         }
 
         $blogPost->update($validatedData);
+
         return new BlogPostResource($blogPost);
     }
 
-    public function destroy($uuid)
+    public function destroy(BlogPost $blogPost)
     {
-        $blogPost = BlogPost::where('uuid', $uuid)->firstOrFail();
 
         DB::beginTransaction();
 
@@ -72,10 +72,12 @@ class BlogPostController extends Controller
             $blogPost->delete();
 
             DB::commit();
+
             return response()->json(['message' => 'Blog Post Deleted Successfully'], 200);
         } catch (\Exception $e) {
             DB::rollBack();
-            return response()->json(['message' => 'An error occurred while deleting the blog post'], 500);
+
+            return response()->json(['message' => $e->getMessage()], 500);
         }
     }
 }

@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Recipe;
-use Illuminate\Support\Str;
-use Illuminate\Http\Request;
-use App\Http\Resources\RecipeResource;
-use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\StoreRecipeRequest;
+use App\Http\Resources\RecipeResource;
+use App\Models\Recipe;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class RecipeController extends Controller
 {
@@ -35,6 +34,8 @@ class RecipeController extends Controller
             $validatedData['image'] = $path;
         }
 
+        // TODO: The database column should also be changed to author_name
+        // TODO: also there's an error when running seeders because the author_name is not set in the database table recipes
         $validatedData['author_name'] = auth()->user()->name; // Store author's name
         $validatedData['uuid'] = (string) Str::uuid();
 

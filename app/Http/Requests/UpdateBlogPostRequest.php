@@ -11,7 +11,7 @@ class UpdateBlogPostRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -27,7 +27,7 @@ class UpdateBlogPostRequest extends FormRequest
             'author_name' => 'required|string|max:255',
             'image' => 'nullable|image|max:2048',
             // TODO: the frontend only has access to the uuid not the id, so we need to change this
-            'category_id' => 'required|exists:categories,uudi',
+            'category_id' => 'required|exists:categories,uuid',
         ];
     }
 }
