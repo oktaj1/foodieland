@@ -9,7 +9,7 @@ class BlogPostResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'id' => $this->uuid,
+            'id' => $this->ulid,
             'title' => $this->title,
             'content' => $this->content,
             'author_name' => $this->author_name, 

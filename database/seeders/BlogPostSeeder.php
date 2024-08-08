@@ -4,6 +4,8 @@ namespace Database\Seeders;
 
 use App\Models\BlogPost;
 use Illuminate\Database\Seeder;
+use App\Traits\hasulid;
+
 
 class BlogPostSeeder extends Seeder
 {

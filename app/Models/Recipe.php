@@ -1,25 +1,27 @@
 <?php
-
 namespace App\Models;
 
-use App\Traits\HasUuid;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Traits\hasulid;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Recipe extends Model
 {
-    use HasFactory, HasUuid;
+    use HasFactory, hasulid;
 
-    protected $guarded = [];
+    protected $fillable = ['category_id','title', 'description','instructions', 'created_by', 'image', 'author_name', 'ulid'];
 
-    public function category(): BelongsTo
+    public function ingredients()
     {
-        return $this->belongsTo(Category::class);
+        return $this->belongsToMany(Ingredient::class, 'ingredient_recipe', 'recipe_id', 'ingredient_id');
     }
 
-    public function user()
+    public function category()
     {
-        return $this->belongsTo(User::class, 'created_by');
+        return $this->belongsTo(Category::class, 'category_id');
     }
 }
+
+
+
+

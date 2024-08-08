@@ -11,11 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('ingredients', function (Blueprint $table) {
-            $table->id();
-            $table->ulid('ulid');
-            $table->string('name');
-            $table->timestamps();
+        Schema::create('ingredient_recipe', function (Blueprint $table) {
+            $table->uuid('recipe_id');
+            $table->uuid('ingredient_id');
+            $table->primary(['recipe_id', 'ingredient_id']);
         });
     }
 };

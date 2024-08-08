@@ -3,12 +3,16 @@
 namespace App\Jobs;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Foundation\Bus\Dispatchable;
+use App\Mail\ContactSubmissionReceived;
+use Illuminate\Support\Facades\Mail;
 
-class  SendContactSubmissionEmail extends Mailable
+class SendContactSubmissionEmail implements ShouldQueue
 {
-    use Queueable, SerializesModels;
+    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     public $contactData;
 
@@ -17,9 +21,8 @@ class  SendContactSubmissionEmail extends Mailable
         $this->contactData = $contactData;
     }
 
-    public function build()
+    public function handle()
     {
-        return $this->view('emails.contact-submission')
-                    ->subject('New Contact Submission');
+        Mail::to('your-email@example.com')->send(new ContactSubmissionReceived($this->contactData));
     }
 }

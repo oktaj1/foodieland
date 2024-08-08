@@ -4,28 +4,36 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
+namespace App\Http\Requests;
+
+use Illuminate\Foundation\Http\FormRequest;
+
 class StoreRecipeRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
+     *
+     * @return bool
      */
-    public function authorize(): bool
+    public function authorize()
     {
-        return true; // Change this to implement authorization logic if needed
+        return true;
     }
 
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
+     * @return array
      */
-    public function rules(): array
+    public function rules()
     {
         return [
-            'title' => 'required|string|max:255',
-            'content' => 'required|string',
-            'image' => 'nullable|image|max:2048',
+            'title' => 'required',
+            'description' => 'required',
+            // 'image' => 'required|image',
+            'ingredients' => 'array',
             'category_id' => 'required|exists:categories,id',
+            'instructions' => 'required',
         ];
     }
 }

@@ -16,7 +16,7 @@ class RecipeFactory extends Factory
         $max = $min + $this->faker->numberBetween(5, 30); // Maximum cooking time, ensuring it's more than the min
 
         return [
-            'uuid' => Str::uuid(),
+            'ulid' => Str::ulid(),
             'title' => implode(' ', $this->faker->words(3)),
             'description' => $this->faker->paragraph,
             'instructions' => $this->faker->paragraphs(3, true),

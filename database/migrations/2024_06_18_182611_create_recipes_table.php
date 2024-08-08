@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('recipes', function (Blueprint $table) {
-            $table->id();
-            $table->uuid();
+            $table->id( 'id')->autoIncrement();
+            $table->ulid('ulid');
             $table->string('title');
             $table->text('description');
             $table->text('instructions');
