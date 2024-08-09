@@ -20,7 +20,6 @@ class BlogPostController extends Controller
 
     public function show(BlogPost $blogPost)
     {
-
         return new BlogPostResource($blogPost);
     }
 
@@ -41,15 +40,8 @@ class BlogPostController extends Controller
         return new BlogPostResource($blogPost);
     }
 
-
-    public function update(StoreBlogPostRequest $request, $ulid)
-    {
-        $blogPost = BlogPost::where('ulid', $ulid)->firstOrFail();
-
     public function update(StoreBlogPostRequest $request, BlogPost $blogPost)
     {
-
-
         $validatedData = $request->validated();
 
         if ($request->hasFile('image')) {
@@ -65,15 +57,8 @@ class BlogPostController extends Controller
         return new BlogPostResource($blogPost);
     }
 
-
-    public function destroy($ulid)
-    {
-        $blogPost = BlogPost::where('ulid', $ulid)->firstOrFail();
-=======
     public function destroy(BlogPost $blogPost)
     {
-
-
         DB::beginTransaction();
 
         try {
