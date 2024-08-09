@@ -26,8 +26,12 @@ class StoreBlogPostRequest extends FormRequest
             // 'content' => 'required|string|max:255',
             'author_name' => 'required|string|max:255',
             'image' => 'required|image|max:2048',
+
             // TODO: the frontend only has access to the uuid not the id, so we need to change this
             // 'category_id' => 'required|exists:categories,uuid',
+
+            'category_id' => 'required|exists:categories,uuid',
+
         ];
     }
 }

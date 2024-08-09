@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('recipes', function (Blueprint $table) {
-            $table->string('author')->constrained('users')->onDelete('cascade');
+            $table->string('author_name')->constrained('users')->onDelete('cascade');
         });
     }
 };
