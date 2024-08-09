@@ -11,11 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('ingredients', function (Blueprint $table) {
-            $table->id();
-            $table->ulid('ulid');
-            $table->string('name');
-            $table->timestamps();
+        Schema::table('recipes', function (Blueprint $table) {
+            $table->renameColumn('author', 'author_name');
         });
     }
+
 };

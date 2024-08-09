@@ -10,7 +10,7 @@ class CategoryResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'id' => $this->uuid,
+            'id' => $this->ulid,
             'name' => $this->name,
             'image' => url('storage/'.$this->image),
             'created_at' => $this->created_at,

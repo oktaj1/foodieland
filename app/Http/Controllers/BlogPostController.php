@@ -34,15 +34,21 @@ class BlogPostController extends Controller
         }
 
         $validatedData['author_name'] = auth()->user()->name;
-        $validatedData['uuid'] = (string) Str::uuid();
+        $validatedData['ulid'] = (string) Str::ulid();
 
         $blogPost = BlogPost::create($validatedData);
 
         return new BlogPostResource($blogPost);
     }
 
+
+    public function update(StoreBlogPostRequest $request, $ulid)
+    {
+        $blogPost = BlogPost::where('ulid', $ulid)->firstOrFail();
+
     public function update(StoreBlogPostRequest $request, BlogPost $blogPost)
     {
+
 
         $validatedData = $request->validated();
 
@@ -59,8 +65,14 @@ class BlogPostController extends Controller
         return new BlogPostResource($blogPost);
     }
 
+
+    public function destroy($ulid)
+    {
+        $blogPost = BlogPost::where('ulid', $ulid)->firstOrFail();
+=======
     public function destroy(BlogPost $blogPost)
     {
+
 
         DB::beginTransaction();
 

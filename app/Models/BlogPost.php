@@ -2,14 +2,14 @@
 
 namespace App\Models;
 
-use App\Traits\HasUuid;
+use App\Traits\hasulid;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class BlogPost extends Model
 {
     use HasFactory;
-    use HasUuid;
+    use hasulid;
 
     protected $guarded = [];
 

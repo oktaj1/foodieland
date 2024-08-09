@@ -2,14 +2,14 @@
 
 namespace App\Models;
 
-use App\Traits\HasUuid;
+use App\Traits\hasulid;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class ContactSubmission extends Model
 {
     use HasFactory;
-    use HasUuid;
+    use hasulid;
 
     protected $guarded = [];
 }

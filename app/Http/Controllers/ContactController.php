@@ -27,7 +27,7 @@ class ContactController extends Controller
         SendContactSubmissionEmail::dispatch($request->only(['name', 'email', 'message']));
 
         // Send email notification (if needed)
-        // Mail::to('your-email@example.com')->send(new ContactSubmissionReceived($request->all()));
+        Mail::to('your-email@example.com')->send(new ContactSubmissionReceived($request->all()));
 
         return response()->json(['message' => 'Contact form submitted successfully.']);
     }
