@@ -9,7 +9,17 @@ class Recipe extends Model
 {
     use HasFactory, hasulid;
 
-    protected $fillable = ['category_id','title', 'description','instructions', 'created_by', 'image', 'author_name', 'ulid'];
+    protected $fillable = [
+        'category_id',
+        'title',
+        'description',
+        'instructions',
+        'created_by',
+        'image',
+        'author_name',
+        'ulid',
+        'cooking_time'
+    ];
 
     public function ingredients()
     {
@@ -21,7 +31,3 @@ class Recipe extends Model
         return $this->belongsTo(Category::class, 'category_id');
     }
 }
-
-
-
-

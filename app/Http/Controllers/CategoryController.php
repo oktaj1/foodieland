@@ -43,4 +43,10 @@ class CategoryController extends Controller
     }
 
     // TODO: do you need a method to delete a category?
+    public function destroy(Category $category)
+    {
+        $category->delete();
+
+        return response()->json(['message' => 'Category deleted successfully']);
+    }
 }

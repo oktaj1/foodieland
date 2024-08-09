@@ -34,6 +34,7 @@ class StoreRecipeRequest extends FormRequest
             'ingredients' => 'array',
             'category_id' => 'required|exists:categories,id',
             'instructions' => 'required',
+            'cooking_time' => 'required',
         ];
     }
 }
